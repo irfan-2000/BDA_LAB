@@ -1,0 +1,39 @@
+Program 1. Perform the following DB operations using Cassandra.
+1. Create a key space by name Employee
+
+
+2. Create a column family by name Employee-Info with attributes Emp_Id Primary Key, Emp_Name, Designation, Date_of_Joining, Salary, Dept_Name
+create table employee_info
+            ... (emp_id int,
+            ... emp_name text,
+            ... designation text,
+            ... doj timespace,
+            ... salary double,
+            ... dept_name text,
+            ... primary key(emp_id));
+
+3. Insert the values into the table in batch
+ BEGIN BATCH INSERT INTO employee_info(emp_id,emp_name,designation,doj,salary,dept_name)VALUES(122,'RAMESH','associate manager','2020-05-24',21000,'R&D') APPLY BATCH;
+
+cqlsh:employee> BEGIN BATCH INSERT INTO employee_info(emp_id,emp_name,designation,doj,salary,dept_name)VALUES(122,'RAHUL','assistant manager','2020-02-11',28000,'R&D') APPLY BATCH;
+cqlsh:employee> select * from employee_info;
+
+4. Update Employee name and Department of Emp-Id 121
+cqlsh:employee> UPDATE employee_info SET emp_name='RAJ',dept_name='research' WHERE emp_id=125;
+cqlsh:employee> select * from employee_info;
+
+5. Sort the details of Employee records based on salary
+
+6. Alter the schema of the table Employee_Info to add a column Projects which stores a set of Projects done by the corresponding Employee.
+cqlsh:employee> ALTER TABLE employee_info
+            ... ADD Project text;
+cqlsh:employee> select * from employee_info;
+
+
+
+7. Update the altered table to add project names.
+cqlsh:employee> update employee_info set project='HPE' where emp_id=121;
+cqlsh:employee> select * from employee_info;
+
+
+8 Create a TTL of 15 seconds to display the values of Employees.
